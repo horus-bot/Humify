@@ -1,6 +1,6 @@
 # python
 import types
-import pytest
+
 from third_layer import human_imperfection_layer
 import third_layer
 
