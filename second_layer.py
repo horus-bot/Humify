@@ -11,18 +11,17 @@ def rewrite_with_groq(user_text: str, analysis_json: dict):
     Uses Groq for fast rewriting.
     """
 
-    prompt = f"""
-You are an advanced text rewriting system.
+    prompt = f"""You are an advanced text rewriting system.
 
 Your goal is to rewrite the user's text into a more natural, human, clear,
-and conversational style while preserving ALL meaning and ALL protected facts.
+and conversational written style while preserving ALL meaning and ALL protected facts.
 
 Below is the analysis JSON you MUST obey:
 
 {analysis_json}
 
-RULES YOU MUST FOLLOW:
-
+────────────────────────────────────────
+### CORE CONSTRAINTS (MUST FOLLOW)
 1. Preserve ALL items under:
    - key_facts
    - forbidden_changes
@@ -34,36 +33,66 @@ RULES YOU MUST FOLLOW:
    - locations
    - technical terms in key_facts
 
-3. The tone_target MUST replace tone_current.
-   - If tone_target = "professional", rewrite accordingly.
-   - If tone_target = "conversational", make it human and relaxed.
-   - If tone_target = "friendly", use warm and clear tone.
-   - If tone_target = "empathetic", soften tense language.
+3. Maintain the tone_target from analysis_json.
 
-4. Improve:
-   - clarity
-   - sentence flow
-   - transitions between paragraphs
-   - readability
-   - sentence variety
-
-5. You MAY:
-   - split long sentences
-   - merge redundant ideas
-   - add small natural connectors ("so", "meanwhile", "on top of that")
-   - reduce emotional exaggeration if needed
-
-6. You MUST NOT:
+4. You MUST NOT:
    - add new facts
    - change ANY numbers
    - invent events
    - add personal opinions
-   - remove essential information from key_facts
+   - remove essential information in key_facts
 
-7. Output ONLY the rewritten text. No explanation.
+────────────────────────────────────────
+### HUMAN-LIKE REWRITING RULES (LESS PREDICTABLE, MORE NATURAL)
+Your rewrite MUST avoid mechanical patterns and overly consistent structure.
+Produce writing that feels human and varied.
+
+1. **Sentence Variety**
+   - Mix short, medium, and long sentences.
+   - Do NOT follow the same rhythm more than twice.
+   - Include at least one sentence with a natural pause or break.
+   - Avoid predictable patterns such as repeating "X caused Y" or "Because of A, B happened."
+
+2. **Connector Diversity**
+   - Do NOT overuse the same connectors.
+   - Vary transitions: "so", "although", "at the same time", 
+     "in a way", "still", "on the other hand", "that said", etc.
+   - Avoid repeating a transition within 2–3 sentences.
+
+3. **Paragraph Structure Variety**
+   - Allow natural unevenness in paragraph length.
+   - NOT every paragraph should conclude neatly; humans don't write that way.
+
+4. **Natural Cognitive Flow**
+   - Slight shifts in tone or emphasis are okay.
+   - Mild reordering for clarity or more natural storytelling is allowed.
+   - Avoid perfectly structured “topic → explanation → conclusion” in every paragraph.
+
+5. **Human Texture Without Changing Meaning**
+   - Mildly soften or expand an idea if it improves flow.
+   - You MAY merge or split sentences when it improves clarity.
+   - You MAY rephrase repeatedly structured sentences into more diverse patterns.
+
+6. **Avoid AI-like Uniformity**
+   - Do NOT repeat the same sentence template.
+   - Do NOT mirror the structure of the original text too closely.
+   - Avoid mechanical symmetry in paragraph endings.
+
+────────────────────────────────────────
+### IMPROVE THE FOLLOWING:
+- clarity
+- readability
+- natural flow between ideas
+- sentence variation
+- overall human-like unpredictability
+
+────────────────────────────────────────
+### OUTPUT INSTRUCTIONS
+Output ONLY the rewritten text. No explanations.
 
 User's text:
 {user_text}
+
 """
 
     response = groq_client.chat.completions.create(
