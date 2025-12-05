@@ -1,11 +1,9 @@
-# Byte-compiled / optimized / DLL files
+# ===========================
+# PYTHON IGNORE
+# ===========================
 __pycache__/
 *.py[cod]
 *$py.class
-
-# C extensions
-*.so
-*.pyd
 
 # Virtual environments
 .venv/
@@ -13,7 +11,7 @@ venv/
 env/
 ENV/
 
-# Distribution / packaging
+# Packaging
 build/
 dist/
 *.egg-info/
@@ -21,11 +19,7 @@ dist/
 # PyInstaller
 *.spec
 
-# Installer logs
-pip-log.txt
-pip-delete-this-directory.txt
-
-# Unit test / coverage reports
+# Unit test / coverage
 htmlcov/
 .tox/
 .coverage
@@ -33,14 +27,14 @@ htmlcov/
 .cache
 .pytest_cache/
 
-# Jupyter Notebook checkpoints
+# Jupyter
 .ipynb_checkpoints/
 
-# IDEs and editors
+# IDE settings
 .vscode/
 .idea/
 
-# Environment variables and secrets
+# Environment variables
 .env
 .env.*
 secrets.env
@@ -55,7 +49,7 @@ logs/
 .DS_Store
 Thumbs.db
 
-# Local credentials / tokens
+# Credentials / Tokens
 credentials.json
 token.json
 
@@ -63,3 +57,49 @@ token.json
 *.bak
 *.swp
 *.tmp
+
+
+# ===========================
+# RUST IGNORE
+# ===========================
+/target/
+
+# (OPTIONAL) Only ignore Cargo.lock for libraries
+# Cargo.lock
+
+.rustc_info.json
+.rustfmt.toml
+.clippy.toml
+rust-toolchain.toml
+
+
+# ===========================
+# FRONTEND (OPTIONAL)
+# ===========================
+node_modules/
+npm-debug.log
+yarn-error.log
+dist/
+
+
+# ===========================
+# LLM / ML CACHES
+# ===========================
+huggingface/
+transformers_cache/
+datasets/
+~/.cache/
+
+
+# ===========================
+# HUMANIZER APP
+# ===========================
+humanizer_logs/
+*.trace
+
+# Temporary directories
+tmp/
+temp/
+__temp__/
+
+.gitignore
