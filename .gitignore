@@ -103,3 +103,15 @@ temp/
 __temp__/
 
 .gitignore
+# Visual Studio junk
+.vs/
+*.sln
+*.slnx
+*.vcxproj
+*.filters
+*.user
+*.suo
+*.sqlite
+
+# VS Code junk
+.vscode/
