@@ -1,10 +1,10 @@
-use axum::{Router, routing::get};
+use axum::{Router, routing::get}; // dependencies importing
 use std::net::SocketAddr;
 
-#[tokio::main]
+#[tokio::main]//rust async runtime 
 async fn main() {
     let app = Router::new()
-        .route("/hello", get(say_hello))
+        .route("/hello", get(say_hello))//used for creating the endpoint
         .route("/bye", get(say_bye));
 
     let addr = SocketAddr::from(([127, 0, 0, 1], 3000));
@@ -13,7 +13,7 @@ async fn main() {
 
     axum::serve(
         tokio::net::TcpListener::bind(addr).await.unwrap(),
-        app,
+        app,/*complicated shit didnt undertood yet */
     )
     .await
     .unwrap();
