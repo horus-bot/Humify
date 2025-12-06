@@ -1,23 +1,26 @@
-use axum::{Router, http::Method, routing::get}; // this is the import part
+use axum::{Router, routing::get};
+use std::net::SocketAddr;
 
-#[tokio::main] // rust async suntime ... this lets me run the main function async 
+#[tokio::main]
 async fn main() {
-    // Create our router 
-        let app = Router::new()
+    let app = Router::new()
         .route("/hello", get(say_hello))
         .route("/bye", get(say_bye));
 
-    println!("test server at http://127.0.0.1:3000");
+    let addr = SocketAddr::from(([127, 0, 0, 1], 3000));
 
-    // Start the server
-    axum::Server::bind(&"127.0.0.1:3000".parse().unwrap())
-        .serve(app.into_make_service())
-        .await
-        .unwrap();
+    println!("Server running at http://{}", addr);
+
+    axum::serve(
+        tokio::net::TcpListener::bind(addr).await.unwrap(),
+        app,
+    )
+    .await
+    .unwrap();
 }
 
 async fn say_hello() -> &'static str {
-    "Hehehe it is working it seems "
+    "Hehehe it is working it seems"
 }
 
 async fn say_bye() -> &'static str {
